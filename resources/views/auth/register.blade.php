@@ -5,9 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
                 <div class="card-body">
+                    <div class="col-12 text-center">
+                        <h1>{{ trans('panel.site_title') }}</h1>
+                        <h5 class="pb-3">{{ __('Register') }}</h5>
+                    </div>
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -67,6 +70,18 @@
                                     {{ __('Register') }}
                                 </button>
                             </div>
+                        </div>
+                        <div class="col-12 mt-4 text-center">
+                            @if(Route::has('login'))
+                                <span>
+                                    Already have an account?
+                                    <a class="btn-link px-0" href="{{ route('login') }}">
+                                        {{ trans('global.login') }}
+                                    </a>
+                                </span>
+
+                            @endif
+
                         </div>
                     </form>
                 </div>

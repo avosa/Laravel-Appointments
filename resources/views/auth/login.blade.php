@@ -70,6 +70,18 @@
                             @endif
 
                         </div>
+                        <div class="col-12 mt-2 text-center">
+                            @if(Route::has('register'))
+                                <span>
+                                    Don't have an account?
+                                    <a class="btn-link px-0" href="{{ route('register') }}">
+                                        {{ trans('global.register') }}
+                                    </a>
+                                </span>
+
+                            @endif
+
+                        </div>
                     </div>
                 </form>
             </div>

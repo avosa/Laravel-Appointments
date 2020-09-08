@@ -1,7 +1,7 @@
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
 
     <div class="c-sidebar-brand d-md-down-none">
-        <a class="c-sidebar-brand-full h4" href="#">
+        <a class="c-sidebar-brand-full h4" href="{{route('admin.home')}}">
             {{ trans('panel.site_title') }}
         </a>
     </div>
@@ -15,6 +15,16 @@
                 {{ trans('global.dashboard') }}
             </a>
         </li>
+
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.clients.index") }}" class="c-sidebar-nav-link">
+                <i class="c-sidebar-nav-icon fas fa-fw fa-user">
+
+                </i>
+                {{ trans('global.clients') }}
+            </a>
+        </li>
+
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
