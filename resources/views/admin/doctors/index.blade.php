@@ -67,13 +67,13 @@
                             </td>
                             <td>
                                 @can('doctor_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.doctors.show', $user->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('doctor_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.doctors.edit', $user->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan

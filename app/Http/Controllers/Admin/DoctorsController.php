@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Doctor;
 use App\Http\Requests\StoreDoctorRequest;
+use App\Http\Requests\UpdateDoctorRequest;
 use App\Service;
 use Gate;
 use App\Http\Controllers\Controller;
@@ -68,21 +69,26 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Doctor $doctor)
     {
-        //
+        abort_if(Gate::denies('doctor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $services = Service::all()->pluck('name','id');
+
+        return view('admin.doctors.edit', compact('services','doctor'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDoctorRequest $request,Doctor $doctor)
     {
-        //
+        $doctor->update($request->all());
+        $doctor->services()->sync(request()->input('services', []));
+        return redirect()->route('admin.doctors.index');
     }
 
     /**
