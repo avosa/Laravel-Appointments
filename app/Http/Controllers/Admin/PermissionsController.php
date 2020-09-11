@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePermissionRequest;
 use App\Permission;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class PermissionsController extends Controller
@@ -31,7 +32,11 @@ class PermissionsController extends Controller
 
     public function store(StorePermissionRequest $request)
     {
-        $permission = Permission::create($request->all());
+        $all = $request->get('title');
+        $permissions = explode(',',$all);
+        foreach ($permissions as $permission){
+            Permission::create(['title'=> Str::slug(trim($permission), '_')]);
+        }
 
         return redirect()->route('admin.permissions.index');
     }

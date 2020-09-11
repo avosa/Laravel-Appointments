@@ -1,6 +1,6 @@
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
 
-    <div class="c-sidebar-brand d-md-down-none">
+    <div class="c-sidebar-brand">
         <a class="c-sidebar-brand-full h4" href="{{route('admin.home')}}">
             {{ trans('panel.site_title') }}
         </a>
@@ -16,14 +16,38 @@
             </a>
         </li>
 
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.clients.index") }}" class="c-sidebar-nav-link">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-user">
+        @can('client_show')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.clients.index") }}" class="c-sidebar-nav-link">
+                    <i class="c-sidebar-nav-icon fas fa-fw fa-user">
 
-                </i>
-                {{ trans('global.clients') }}
-            </a>
-        </li>
+                    </i>
+                    {{ trans('global.clients') }}
+                </a>
+            </li>
+        @endcan
+
+        @can('doctor_show')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.clients.index") }}" class="c-sidebar-nav-link">
+                    <i class="c-sidebar-nav-icon fas fa-fw fa-user">
+
+                    </i>
+                    {{ trans('global.doctors') }}
+                </a>
+            </li>
+        @endcan
+
+        @can('service_show')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.services.index") }}" class="c-sidebar-nav-link">
+                    <i class="c-sidebar-nav-icon fas fa-fw fa-cubes">
+
+                    </i>
+                    {{ trans('global.services') }}
+                </a>
+            </li>
+        @endcan
 
         @can('user_management_access')
             <li class="c-sidebar-nav-dropdown">

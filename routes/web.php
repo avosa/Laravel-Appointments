@@ -27,6 +27,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
     Route::resource('clients', 'ClientsController');
+
+    Route::resource('services', 'ServicesController');
+
+    Route::resource('doctors', 'DoctorsController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password

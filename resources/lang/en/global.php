@@ -271,5 +271,7 @@ return [
     'team-members'                         => 'Team members',
     'calendar'                             => 'Calendar',
     'messenger'                            => 'Messenger',
-    'clients'                            => 'Client',
+    'clients'                              => 'Clients',
+    'services'                             => 'Services',
+    'doctors'                              => 'Doctors',
 ];
