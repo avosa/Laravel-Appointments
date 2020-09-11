@@ -29,8 +29,8 @@
 
         @can('doctor_show')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.clients.index") }}" class="c-sidebar-nav-link">
-                    <i class="c-sidebar-nav-icon fas fa-fw fa-user">
+                <a href="{{ route("admin.doctors.index") }}" class="c-sidebar-nav-link">
+                    <i class="c-sidebar-nav-icon fas fa-fw fa-medkit">
 
                     </i>
                     {{ trans('global.doctors') }}

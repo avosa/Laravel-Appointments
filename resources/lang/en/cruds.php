@@ -121,7 +121,7 @@ return [
             'name_helper'              => '',
             'email'                    => 'Email',
             'email_helper'             => '',
-            'phone'                 => 'P{hone',
+            'phone'                 => 'Phone',
             'phone_helper'          => '',
             'services'                    => 'Services',
             'services_helper'             => '',

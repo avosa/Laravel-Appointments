@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-@can('user_create')
+@can('doctor_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.users.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.doctors.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.doctor.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.doctor.title') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -23,19 +23,19 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
+                            {{ trans('cruds.doctor.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            {{ trans('cruds.doctor.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.email') }}
+                            {{ trans('cruds.doctor.fields.email') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
+                            {{ trans('cruds.doctor.fields.phone') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.roles') }}
+                            {{ trans('cruds.doctor.fields.services') }}
                         </th>
                         <th>
                             &nbsp;
@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $key => $user)
+                    @foreach($doctors as $key => $user)
                         <tr data-entry-id="{{ $user->id }}">
                             <td>
 
@@ -58,28 +58,28 @@
                                 {{ $user->email ?? '' }}
                             </td>
                             <td>
-                                {{ $user->email_verified_at ?? '' }}
+                                {{ $user->phone ?? '' }}
                             </td>
                             <td>
-                                @foreach($user->roles as $key => $item)
-                                    <span class="badge badge-info">{{ $item->title }}</span>
+                                @foreach($user->services as $key => $item)
+                                    <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
                             </td>
                             <td>
-                                @can('user_show')
+                                @can('doctor_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('user_edit')
+                                @can('doctor_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('user_delete')
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('doctor_delete')
+                                    <form action="{{ route('admin.doctors.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -144,7 +144,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

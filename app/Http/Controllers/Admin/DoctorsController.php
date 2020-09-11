@@ -1,8 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Doctor;
+use App\Http\Requests\StoreDoctorRequest;
+use App\Service;
+use Gate;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DoctorsController extends Controller
 {
@@ -13,7 +19,9 @@ class DoctorsController extends Controller
      */
     public function index()
     {
-        //
+        $doctors = Doctor::all();
+
+        return view('admin.doctors.index', compact('doctors'));
     }
 
     /**
@@ -23,7 +31,10 @@ class DoctorsController extends Controller
      */
     public function create()
     {
-        //
+        abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '$03 Forbidden');
+        $services = Service::all()->pluck('name','id');
+
+        return view('admin.doctors.create', compact('services'));
     }
 
     /**
@@ -32,9 +43,12 @@ class DoctorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDoctorRequest $request)
     {
-        //
+        $doctor = Doctor::create($request->all());
+        $doctor->services()->sync($request->input('services', []));
+
+        return  redirect()->route('admin.doctors.index')->with(['success' => 'Doctor was successfully created']);
     }
 
     /**
@@ -79,6 +93,9 @@ class DoctorsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        abort_if(Gate::denies('doctor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        Doctor::destroy($id);
+
+        return back();
     }
 }

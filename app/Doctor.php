@@ -15,4 +15,9 @@ class Doctor extends Model
     ];
 
     protected $table = 'doctors';
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
 }
