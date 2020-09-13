@@ -274,4 +274,5 @@ return [
     'clients'                              => 'Clients',
     'services'                             => 'Services',
     'doctors'                              => 'Doctors',
+    'appointments'                         => 'Appointments',
 ];

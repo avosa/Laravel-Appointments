@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Appointment;
+use App\Client;
+use App\Doctor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class AppointmentController extends Controller
+class AppointmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +19,21 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $appointments = Appointment::all();
+        return view('admin.appointments.index', compact('appointments'));
+    }
+
+    public function services(Request $request)
+    {
+        abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($request->ajax() && $request->id){
+            $id = $request->id;
+            $doctor = Doctor::find($id);
+            return response()->json(
+                $doctor->services()->pluck('name', 'id')
+            );
+        }
     }
 
     /**
@@ -25,7 +43,11 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //
+        abort_if(Gate::denies('appointment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('admin.appointments.create', compact('clients', 'doctors'));
     }
 
     /**

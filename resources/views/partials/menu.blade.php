@@ -38,6 +38,17 @@
             </li>
         @endcan
 
+        @can('appointment_show')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.appointments.index") }}" class="c-sidebar-nav-link">
+                    <i class="c-sidebar-nav-icon fas fa-fw fa-file">
+
+                    </i>
+                    {{ trans('global.appointments') }}
+                </a>
+            </li>
+        @endcan
+
         @can('service_show')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.services.index") }}" class="c-sidebar-nav-link">
