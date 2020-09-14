@@ -126,7 +126,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.users.massDestroy') }}",
+    url: "{{ route('admin.appointments.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -144,7 +144,8 @@
           headers: {'x-csrf-token': _token},
           method: 'POST',
           url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
+          data: { ids: ids, _method: 'DELETE' },
+        })
           .done(function () { location.reload() })
       }
     }

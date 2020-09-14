@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\MassDestroyAppointmentRequest;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use Carbon\Carbon;
@@ -76,7 +77,7 @@ class AppointmentsController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        return view('admin.appointments.show', compact('appointment'));
     }
 
     /**
@@ -113,13 +114,27 @@ class AppointmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Appointment  $appointment
+     * @param \App\Appointment $appointment
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Appointment $appointment)
     {
         abort_if(Gate::denies('appointment_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $appointment->delete();
+
         return back();
+    }
+
+
+    /**
+     * @param MassDestroyAppointmentRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy(MassDestroyAppointmentRequest $request)
+    {
+        Appointment::whereIn('id', $request->input('ids', []))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

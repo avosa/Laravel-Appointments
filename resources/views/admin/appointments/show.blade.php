@@ -1,73 +1,90 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.user.title') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.show') }} {{ trans('cruds.appointment.title') }}
+        </div>
 
-    <div class="card-body">
-        <div class="form-group">
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
+        <div class="card-body">
+            <div class="mb-2">
+                <table class="table table-bordered table-striped">
+                    <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
+                            {{ trans('cruds.appointment.fields.id') }}
                         </th>
                         <td>
-                            {{ $user->id }}
+                            {{ $appointment->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            {{ trans('cruds.appointment.fields.client') }}
                         </th>
                         <td>
-                            {{ $user->name }}
+                            {{ $appointment->client->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email') }}
+                            {{ trans('cruds.appointment.fields.doctor') }}
                         </th>
                         <td>
-                            {{ $user->email }}
+                            {{ $appointment->doctor->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
+                            {{ trans('cruds.appointment.fields.start_time') }}
                         </th>
                         <td>
-                            {{ $user->email_verified_at }}
+                            {{ $appointment->start_time }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.roles') }}
+                            {{ trans('cruds.appointment.fields.finish_time') }}
                         </th>
                         <td>
-                            @foreach($user->roles as $key => $roles)
-                                <span class="label label-info">{{ $roles->title }}</span>
+                            {{ $appointment->finish_time }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.appointment.fields.price') }}
+                        </th>
+                        <td>
+                            ${{ $appointment->price }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.appointment.fields.comment') }}
+                        </th>
+                        <td>
+                            {!! $appointment->comment !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Services
+                        </th>
+                        <td>
+                            @foreach($appointment->services as $id => $services)
+                                <span class="label label-info label-many">{{ $services->name }}</span>
                             @endforeach
                         </td>
                     </tr>
-                </tbody>
-            </table>
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
+                    </tbody>
+                </table>
+                <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
+
+
         </div>
     </div>
-</div>
-
-
 
 @endsection
