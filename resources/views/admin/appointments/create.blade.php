@@ -42,7 +42,7 @@
 
             <div class="form-group {{ $errors->has('start_time') ? 'has-error' : '' }}">
                 <label for="start_time">{{ trans('cruds.appointment.fields.start_time') }}*</label>
-                <input type="text" id="start_time" name="start_time" class="form-control datetime" value="{{ old('start_time', isset($appointment) ? $appointment->start_time : '') }}" required>
+                <input type="text" id="start_time" name="start_time" class="form-control datetime" autocomplete="off" value="{{ old('start_time', isset($appointment) ? $appointment->start_time : '') }}" required>
                 @if($errors->has('start_time'))
                     <div class="invalid-feedback">
                         {{ $errors->first('start_time') }}
@@ -55,7 +55,7 @@
 
             <div class="form-group {{ $errors->has('finish_time') ? 'has-error' : '' }}">
                 <label for="finish_time">{{ trans('cruds.appointment.fields.finish_time') }}*</label>
-                <input type="text" id="finish_time" name="finish_time" class="form-control datetime" value="{{ old('finish_time', isset($appointment) ? $appointment->finish_time : '') }}" required>
+                <input type="text" id="finish_time" name="finish_time" class="form-control datetime" autocomplete="off" value="{{ old('finish_time', isset($appointment) ? $appointment->finish_time : '') }}" required>
                 @if($errors->has('finish_time'))
                     <div class="invalid-feedback">
                         {{ $errors->first('finish_time') }}
@@ -91,7 +91,7 @@
 
             <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
                 <label for="comments">{{ trans('cruds.appointment.fields.comment') }}</label>
-                <textarea id="comments" name="comment" class="form-control ">{{ old('comments', isset($appointment) ? $appointment->comment : '') }}</textarea>
+                <textarea id="comments" name="comments" class="form-control ">{{ old('comments', isset($appointment) ? $appointment->comment : '') }}</textarea>
                 @if($errors->has('comment'))
                     <em class="invalid-feedback">
                         {{ $errors->first('comment') }}

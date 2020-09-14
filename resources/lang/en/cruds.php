@@ -151,7 +151,7 @@ return [
             'finish_time_helper'        => '',
             'price'               => 'Price',
             'price_helper'        => '',
-            'comment'               => 'Comment',
+            'comment'               => 'Comments',
             'comment_helper'        => '',
             'service'               => 'Services',
             'service_helper'        => '',

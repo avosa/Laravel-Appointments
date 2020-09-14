@@ -1,72 +1,116 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.doctor.title_singular') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.edit') }} {{ trans('cruds.appointment.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.doctors.update", [$doctor->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.doctor.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $doctor->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.doctor.fields.name_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="email">{{ trans('cruds.doctor.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $doctor->email) }}" required>
-                @if($errors->has('email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="password">{{ trans('cruds.doctor.fields.phone') }}</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{old('phone', $doctor->phone)}}" required >
-                @if($errors->has('phone'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('phone') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.doctor.fields.phone_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="roles">{{ trans('cruds.doctor.fields.services') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+        <div class="card-body">
+            <form method="POST" action="{{ route("admin.appointments.update", [$appointment->id]) }}" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <label class="required" for="to_id">{{ trans('cruds.appointment.fields.client') }}</label>
+                    <select class="form-control select2 {{ $errors->has('client_id') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
+                        @foreach($clients as $id => $client)
+                            <option value="{{ $id }}" {{ ($appointment->client ? $appointment->client->id : old('client_id')) == $id ? 'selected' : '' }}>{{ $client }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('client_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('client_id') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.appointment.fields.client_helper') }}</span>
                 </div>
-                <select class="form-control select2 {{ $errors->has('services') ? 'is-invalid' : '' }}" name="services[]" id="services" multiple required>
-                    @foreach($services as $id => $service)
-                        <option value="{{ $id }}" {{ (in_array($id, old('services', [])) || $doctor->services->contains($id)) ? 'selected' : '' }}>{{ $service }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('services'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('services') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.doctor.fields.services_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.update') }}
-                </button>
-            </div>
-        </form>
+
+                <div class="form-group">
+                    <label class="required" for="to_id">{{ trans('cruds.appointment.fields.doctor') }}</label>
+                    <select class="form-control select2 {{ $errors->has('doctor') ? 'is-invalid' : '' }}" name="doctor_id" id="doctor_id" required>
+                        @foreach($doctors as $id => $doctor)
+                            <option value="{{ $id }}" {{ ($appointment->doctor? $appointment->doctor->id : old('doctor_id')) == $id ? 'selected' : '' }}>{{ $doctor }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('doctor'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('doctor') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.appointment.fields.doctor_helper') }}</span>
+                </div>
+
+                <div class="form-group {{ $errors->has('start_time') ? 'has-error' : '' }}">
+                    <label for="start_time">{{ trans('cruds.appointment.fields.start_time') }}*</label>
+                    <input type="text" id="start_time" name="start_time" class="form-control datetime" autocomplete="off" value="{{ old('start_time', isset($appointment) ? $appointment->start_time : '') }}" required>
+                    @if($errors->has('start_time'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('start_time') }}
+                        </div>
+                    @endif
+                    <p class="helper-block">
+                        {{ trans('cruds.appointment.fields.start_time_helper') }}
+                    </p>
+                </div>
+
+                <div class="form-group {{ $errors->has('finish_time') ? 'has-error' : '' }}">
+                    <label for="finish_time">{{ trans('cruds.appointment.fields.finish_time') }}*</label>
+                    <input type="text" id="finish_time" name="finish_time" class="form-control datetime" autocomplete="off" value="{{ old('finish_time', isset($appointment) ? $appointment->finish_time : '') }}" required>
+                    @if($errors->has('finish_time'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('finish_time') }}
+                        </div>
+                    @endif
+                    <p class="helper-block">
+                        {{ trans('cruds.appointment.fields.finish_time_helper') }}
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label class="required" for="roles">{{ trans('cruds.appointment.fields.service') }}</label>
+                    <select class="form-control select2 {{ $errors->has('service_id') ? 'is-invalid' : '' }}" name="service_id" id="service_id" required>
+                        @foreach($appointment->doctor->services->pluck('name', 'id') as $key => $service)
+                            <option value="{{$key}}" {{($appointment->$service ? $appointment->service->id : old('service_id')) == $key ? 'selected' : ''}}>{{$service}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('service_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('service_id') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.appointment.fields.service_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="required" for="price">{{ trans('cruds.appointment.fields.price') }}</label>
+                    <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', $appointment->price?? '' ) }}" required>
+                    @if($errors->has('price'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('price') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.appointment.fields.price_helper') }}</span>
+                </div>
+
+                <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
+                    <label for="comments">{{ trans('cruds.appointment.fields.comment') }}</label>
+                    <textarea id="comments" name="comments" class="form-control ">{{ old('comments', isset($appointment) ? $appointment->comment : '') }}</textarea>
+                    @if($errors->has('comment'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('comment') }}
+                        </em>
+                    @endif
+                    <p class="helper-block">
+                        {{ trans('cruds.appointment.fields.comment_helper') }}
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">
+                        {{ trans('global.update') }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-
-
 @endsection

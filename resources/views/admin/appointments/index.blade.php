@@ -61,10 +61,10 @@
                                 {{ $appointment->id ?? '' }}
                             </td>
                             <td>
-                                {{ $appointment->client()->name ?? '' }}
+                                {{ $appointment->client->name ?? '' }}
                             </td>
                             <td>
-                                {{ $appointment->doctor()->name ?? '' }}
+                                {{ $appointment->doctor->name ?? '' }}
                             </td>
                             <td>
                                 {{ $appointment->start_time ?? '' }}
@@ -76,7 +76,7 @@
                                 {{ $appointment->price ?? '' }}
                             </td>
                             <td>
-                                {{ $appointment->comment ?? '' }}
+                                {{ $appointment->comments ?? '' }}
                             </td>
                             <td>
                                 @foreach($appointment->services as $key => $item)
@@ -85,19 +85,19 @@
                             </td>
                             <td>
                                 @can('doctor_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.doctors.show', $user->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.appointments.show', $appointment->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('doctor_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.doctors.edit', $user->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.appointments.edit', $appointment->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('doctor_delete')
-                                    <form action="{{ route('admin.doctors.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">

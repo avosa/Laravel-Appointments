@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\StoreAppointmentRequest;
+use App\Http\Requests\UpdateAppointmentRequest;
+use Carbon\Carbon;
 use Gate;
 use App\Appointment;
 use App\Client;
@@ -20,7 +23,7 @@ class AppointmentsController extends Controller
     public function index()
     {
         abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $appointments = Appointment::all();
+        $appointments = Appointment::with(['doctor', 'services', 'client'])->get();
         return view('admin.appointments.index', compact('appointments'));
     }
 
@@ -56,9 +59,13 @@ class AppointmentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAppointmentRequest $request)
     {
-        //
+        $appointment = Appointment::create($request->all());
+
+        $appointment->services()->sync($request->input('service_id', []));
+
+        return redirect()->route('admin.appointments.index');
     }
 
     /**
@@ -80,7 +87,12 @@ class AppointmentsController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        //
+        abort_if(Gate::denies('appointment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $doctors = Doctor::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.appointments.edit', compact('appointment', 'clients', 'doctors'));
     }
 
     /**
@@ -90,9 +102,12 @@ class AppointmentsController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Appointment $appointment)
+    public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
-        //
+        $appointment->update($request->all());
+        $appointment->services()->sync($request->input('service_id', []));
+
+        return redirect()->route('admin.appointments.index');
     }
 
     /**
@@ -103,6 +118,8 @@ class AppointmentsController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //
+        abort_if(Gate::denies('appointment_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $appointment->delete();
+        return back();
     }
 }

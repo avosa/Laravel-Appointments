@@ -13,7 +13,7 @@ class CreateAppointmentServicePivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('appointment_service_pivot', function (Blueprint $table) {
+        Schema::create('appointment_service', function (Blueprint $table) {
             $table->unsignedInteger('appointment_id');
             $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
             $table->unsignedInteger('service_id');
@@ -28,6 +28,6 @@ class CreateAppointmentServicePivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointment_service_pivot');
+        Schema::dropIfExists('appointment_service');
     }
 }

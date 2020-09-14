@@ -14,19 +14,24 @@ $(document).ready(function () {
       previous: 'fas fa-chevron-left',
       next: 'fas fa-chevron-right'
     }
-  })
+  });
 
   $('.datetime').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss',
     locale: 'en',
     sideBySide: true,
+      keepInvalid: false,
+      useCurrent:false,
+      minDate: new Date(),
+      daysOfWeekDisabled: [0, 6],
+      disabledHours: [0, 1, 2, 3, 4, 5, 6, 7, 18, 19, 20, 21, 22, 23, 24],
     icons: {
       up: 'fas fa-chevron-up',
       down: 'fas fa-chevron-down',
       previous: 'fas fa-chevron-left',
       next: 'fas fa-chevron-right'
     }
-  })
+  });
 
   $('.timepicker').datetimepicker({
     format: 'HH:mm:ss',
@@ -36,7 +41,7 @@ $(document).ready(function () {
       previous: 'fas fa-chevron-left',
       next: 'fas fa-chevron-right'
     }
-  })
+  });
 
   $('.select-all').click(function () {
     let $select2 = $(this).parent().siblings('.select2')
