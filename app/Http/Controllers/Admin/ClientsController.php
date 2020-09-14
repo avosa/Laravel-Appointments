@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Client;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyClientsRequest;
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -51,46 +53,53 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Client $client)
     {
-        //
+        return view('admin.clients.show', compact('client'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Client $client)
     {
-        //
+        return view('admin.clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        $client->update($request->all());
+        return redirect()->route('admin.clients.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        Client::destroy($id);
+        $client->delete();
         return redirect()->route('admin.clients.index')->with(['success'=> 'Client was deleted successfully']);
+    }
+
+    public function massDestroy(MassDestroyClientsRequest $request)
+    {
+        Client::whereIn('id', $request->input('ids',[]))->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

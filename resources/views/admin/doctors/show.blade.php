@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.user.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.doctor.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.doctors.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -17,50 +17,50 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
+                            {{ trans('cruds.doctor.fields.id') }}
                         </th>
                         <td>
-                            {{ $user->id }}
+                            {{ $doctor->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            {{ trans('cruds.doctor.fields.name') }}
                         </th>
                         <td>
-                            {{ $user->name }}
+                            {{ $doctor->name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email') }}
+                            {{ trans('cruds.doctor.fields.email') }}
                         </th>
                         <td>
-                            {{ $user->email }}
+                            {{ $doctor->email }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
+                            {{ trans('cruds.doctor.fields.phone') }}
                         </th>
                         <td>
-                            {{ $user->email_verified_at }}
+                            {{ $doctor->phone }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.roles') }}
+                            {{ trans('cruds.doctor.fields.services') }}
                         </th>
                         <td>
-                            @foreach($user->roles as $key => $roles)
-                                <span class="label label-info">{{ $roles->title }}</span>
+                            @foreach($doctor->services as $key => $service)
+                                <span class="badge badge-info">{{ $service->name }}</span>
                             @endforeach
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.doctors.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

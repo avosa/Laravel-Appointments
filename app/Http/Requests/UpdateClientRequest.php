@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Gate;
 use Illuminate\Http\Response;
 
-class StoreClientRequest extends FormRequest
+class UpdateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class StoreClientRequest extends FormRequest
      */
     public function authorize()
     {
-        abort_if(Gate::denies('client_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('client_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return true;
     }
 
@@ -30,15 +30,15 @@ class StoreClientRequest extends FormRequest
             'name' => [
                 'required',
                 'string'
-                ],
+            ],
             'email' => [
                 'required',
                 'email',
-                'unique:clients,deleted_at,NULL'
+                'unique:clients,email,'.request()->route('client')->id
             ],
             'phone' => [
                 'required',
-                'unique:clients'
+                'unique:clients,phone,'.request()->route('client')->id
             ],
         ];
     }

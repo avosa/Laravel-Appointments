@@ -26,10 +26,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
 
+    Route::delete('clients/destroy', 'ClientsController@massDestroy')->name('clients.massDestroy');
     Route::resource('clients', 'ClientsController');
 
     Route::resource('services', 'ServicesController');
 
+    Route::delete('doctors/destroy', 'DoctorsController@massDestroy')->name('doctors.massDestroy');
     Route::resource('doctors', 'DoctorsController');
 
     Route::get('appointments/services', 'AppointmentsController@services')->name('appointments.services');

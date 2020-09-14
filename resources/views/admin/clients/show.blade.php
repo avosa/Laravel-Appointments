@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.user.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.clients.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.clients.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -17,50 +17,48 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
+                            {{ trans('cruds.clients.fields.id') }}
                         </th>
                         <td>
-                            {{ $user->id }}
+                            {{ $client->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            {{ trans('cruds.clients.fields.name') }}
                         </th>
                         <td>
-                            {{ $user->name }}
+                            {{ $client->name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email') }}
+                            {{ trans('cruds.clients.fields.email') }}
                         </th>
                         <td>
-                            {{ $user->email }}
+                            {{ $client->email }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
+                            {{ trans('cruds.clients.fields.phone') }}
                         </th>
                         <td>
-                            {{ $user->email_verified_at }}
+                            {{ $client->phone }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.roles') }}
+                            {{ trans('cruds.clients.fields.created_at') }}
                         </th>
                         <td>
-                            @foreach($user->roles as $key => $roles)
-                                <span class="label label-info">{{ $roles->title }}</span>
-                            @endforeach
+                            {{$client->created_at}}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.clients.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

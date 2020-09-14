@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Doctor;
+use App\Http\Requests\MassDestroyDoctorsRequest;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Service;
@@ -55,12 +56,12 @@ class DoctorsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Doctor $doctor)
     {
-        //
+        return view('admin.doctors.show', compact('doctor'));
     }
 
     /**
@@ -103,5 +104,12 @@ class DoctorsController extends Controller
         Doctor::destroy($id);
 
         return back();
+    }
+
+    public function massDestroy(MassDestroyDoctorsRequest $request)
+    {
+        Doctor::whereIn('id', $request->input('ids', []))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
